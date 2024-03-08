@@ -1,4 +1,5 @@
 # my-pokemoncard-app
+<img width="1437" alt="Screenshot 2024-03-08 at 00 58 59" src="https://github.com/Okekejr/my-pokemonCard-app/assets/85338878/068394d6-fe85-418d-bf93-58597852193f">
 
 ## Description:
 
@@ -11,6 +12,10 @@
 - [Chakra UI](https://chakra-ui.com/)
 
 ## Pages
+<img width="1439" alt="Screenshot 2024-03-08 at 01 00 32" src="https://github.com/Okekejr/my-pokemonCard-app/assets/85338878/7901c134-8131-4e51-ac8f-d259e46fb058">
+
+<img width="1437" alt="Screenshot 2024-03-08 at 01 00 18" src="https://github.com/Okekejr/my-pokemonCard-app/assets/85338878/e14dff4f-68dd-48ea-b31b-d83e9a16a25c">
+
 
 ## Need Some Pokemon URL's to play around with? here are a few
 
