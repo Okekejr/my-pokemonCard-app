@@ -3,13 +3,15 @@
 
 ## Description:
 
-> - My PokemonCards is built using my pokemon API which I built called my-pokemonCard-API. The PokemonCards app renders the list of pokemons available, in the gallery page which include names, descriptions and the pokemon cards. It also gives you the feature to delete a pokemon. And add pokemon cards to the list on the Add pokemon page.
+> - My PokemonCards is a full-stack app that uses an in-built server and Postgres database provided by Vercel for deployment about my-pokemonCard-API. The PokemonCards app fetches the Pokemon from the Vercel Postgres database and renders a list of Pokemon available, on the gallery page in which each Pokemon has a card that includes names, descriptions, images, etc. It also gives you the feature to delete a Pokemon and add Pokemon cards to the list on the Add Pokemon page.
 
 ## Built With & Requirements
 
 - [Next.js with Typecript](https://nextjs.org/docs/pages/building-your-application/configuring/typescript)
+- [Postgres with Vercel](https://vercel.com/docs/storage/vercel-postgres)
 - [My Pokemon API](https://github.com/Okekejr/my-pokemon-api)
 - [Chakra UI](https://chakra-ui.com/)
+- [Postgres](https://www.postgresql.org/)
 
 ## Pages
 <img width="1439" alt="Screenshot 2024-03-08 at 01 00 32" src="https://github.com/Okekejr/my-pokemonCard-app/assets/85338878/7901c134-8131-4e51-ac8f-d259e46fb058">
@@ -17,7 +19,7 @@
 <img width="1437" alt="Screenshot 2024-03-08 at 01 00 18" src="https://github.com/Okekejr/my-pokemonCard-app/assets/85338878/e14dff4f-68dd-48ea-b31b-d83e9a16a25c">
 
 
-## Need Some Pokemon URL's to play around with? here are a few
+## Need Some Pokemon URLs to play around with? here are a few
 
 - [
   - name: "Ivysaur",
