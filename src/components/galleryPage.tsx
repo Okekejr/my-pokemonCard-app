@@ -1,13 +1,11 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { SectionContainer } from "./sectionContainer";
-import { Box, Flex, Spinner, Text, VStack } from "@chakra-ui/react";
+import { Flex, Spinner, Text, VStack } from "@chakra-ui/react";
 import { useFetch } from "@/hooks/fetching";
 import { Pokemons } from "./ui/card";
 
 const GalleryPage: FC = () => {
-  const { galry, error, refetchData } = useFetch(
-    "https://my-pokemon-api.vercel.app/pokemon_okeke"
-  );
+  const { galry, fetchData } = useFetch("/api/pokemon/getPokemon");
 
   return (
     <>
@@ -20,13 +18,15 @@ const GalleryPage: FC = () => {
           fontSize={{ base: "1.6rem", md: "1.8rem" }}
           fontWeight="bold"
         >
-          Gallery currently has ( {galry?.count} ) Pokemons
+          Gallery currently has ( {galry?.length} ) Pokemons
         </Text>
 
         <VStack gap={8}>
-          {galry && galry.results.length > 0 ? (
-            galry.results.map((poke) => {
-              return <Pokemons key={poke.id} data={poke} refresh={refetchData} />;
+          {galry && galry.length > 0 ? (
+            galry.map((poke) => {
+              return (
+                <Pokemons key={poke.id} data={poke} fetching={fetchData} />
+              );
             })
           ) : (
             <Flex

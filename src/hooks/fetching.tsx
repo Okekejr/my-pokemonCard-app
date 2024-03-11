@@ -1,9 +1,9 @@
-import { PokemonT } from "@/types";
+import { pokemonDT } from "@/types";
 import { useCallback, useState, useEffect } from "react";
 
 export const useFetch = (url: string) => {
-  const [data, setData] = useState<PokemonT["results"]>([]);
-  const [galry, setGalry] = useState<PokemonT>();
+  const [data, setData] = useState<pokemonDT[]>([]);
+  const [galry, setGalry] = useState<pokemonDT[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,7 +14,7 @@ export const useFetch = (url: string) => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const result = await response.json();
-      setData(result.results.slice(0, 3));
+      setData(result.slice(0, 3));
       setGalry(result);
     } catch (error) {
       setError(
@@ -25,28 +25,9 @@ export const useFetch = (url: string) => {
     }
   }, [url]);
 
-  const refetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const result = await response.json();
-      setData(result.results.slice(0, 3));
-      setGalry(result);
-    } catch (error) {
-      setError(
-        error instanceof Error ? error.message : "Unknown error occurred"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  return { data, loading, error, galry, refetchData };
+  return { data, loading, error, galry, fetchData };
 };

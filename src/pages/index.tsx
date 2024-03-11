@@ -7,9 +7,7 @@ import { SectionContainer } from "@/components/sectionContainer";
 import { FC } from "react";
 
 const Home: FC<ContainerProps> = ({ ...rest }) => {
-  const { data, loading, error } = useFetch(
-    "https://my-pokemon-api.vercel.app/pokemon_okeke"
-  );
+  const { data, loading, error } = useFetch("/api/pokemon/getPokemon");
 
   const [ref, inView] = useInView({
     triggerOnce: true, // Animation triggers only once when entering viewport

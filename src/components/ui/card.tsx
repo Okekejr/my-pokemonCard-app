@@ -1,3 +1,4 @@
+import { useFeedback } from "@/hooks/feedback";
 import { pokemonDT } from "@/types";
 import {
   Box,
@@ -13,7 +14,7 @@ import { FC } from "react";
 
 interface Props extends FlexProps {
   data: pokemonDT;
-  refresh: () => Promise<void>;
+  fetching: () => Promise<void>;
 }
 
 export const Card: FC<FlexProps> = ({ children, ...rest }) => {
@@ -34,30 +35,38 @@ export const Card: FC<FlexProps> = ({ children, ...rest }) => {
   );
 };
 
-export const Pokemons: FC<Props> = ({ data, refresh, ...rest }) => {
+export const Pokemons: FC<Props> = ({ data, fetching, ...rest }) => {
   const { name, card, description, id } = data;
+  const { toasting } = useFeedback();
 
   // delete request to the API using the ID from the API
   const deleteHandler = async (id: number) => {
     try {
-      const delreq = await fetch(
-        `https://my-pokemon-api.vercel.app/pokemon_okeke/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const delreq = await fetch(`/api/pokemon/deletePokemon?id=${id}`, {
+        method: "DELETE",
+      });
 
       if (!delreq.ok) {
         throw new Error(`Failed to delete item with ID ${id}`);
       }
+
+      // Wait for the delete request to complete before triggering the refetch
+      await delreq.json();
+
       // If deletion is successful, refetch the updated list of pokemons using the useFetch hook
-      refresh();
+      fetching();
       console.log(`Pokemon with ID ${id} deleted successfully.`);
+      toasting({
+        _title: "Pokemon Deleted.",
+        desc: `${name} Pokemon with ID ${id} deleted successfully.`,
+        status: "success",
+      });
     } catch (error) {
-      // Handle error appropriately (e.g., logging, showing a notification)
-      console.error("Delete request failed:", error);
-      // Throw error to be caught by the caller for further handling if needed
-      throw error;
+      toasting({
+        _title: "Failed to Delete.",
+        desc: `Delete request failed:",${error}`,
+        status: "error",
+      });
     }
   };
 

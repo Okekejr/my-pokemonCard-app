@@ -12,6 +12,7 @@ import {
 import React, { FC, useState } from "react";
 import { Card } from "./ui/card";
 import { SectionContainer } from "./sectionContainer";
+import { useFeedback } from "@/hooks/feedback";
 
 const initialState = {
   name: "",
@@ -22,8 +23,7 @@ const initialState = {
 
 const AddPokemonPage: FC = () => {
   const [formData, setFormData] = useState(initialState);
-  const [deleteSuccess, setDeleteSuccess] = useState(false);
-  const [error, setError] = useState("");
+  const { toasting } = useFeedback();
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -40,31 +40,37 @@ const AddPokemonPage: FC = () => {
     event.preventDefault();
 
     try {
-      const postReq = await fetch(
-        "https://my-pokemon-api.vercel.app/pokemon_okeke",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: formData.name,
-            image: formData.image,
-            description: formData.description,
-            card: formData.card,
-          }),
-        }
-      );
+      const postReq = await fetch("/api/pokemon/createPokemon", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          image: formData.image,
+          description: formData.description,
+          card: formData.card,
+        }),
+      });
 
       if (postReq.ok) {
-        setDeleteSuccess(true);
+        toasting({
+          _title: "Pokemon added!.",
+          status: "success",
+        });
+
         clearForm();
-        setTimeout(() => {
-          setDeleteSuccess(false);
-        }, 1500);
       } else {
-        setError("Failed to save data. Please try again.");
+        toasting({
+          _title: "FAILED",
+          desc: "Failed to save data. Please try again.",
+          status: "error",
+        });
       }
     } catch (error) {
-      setError("An error occurred. Please try again later.");
+      toasting({
+        _title: "POKEMON NOT ADDED",
+        desc: "An error occurred. Please try again later.",
+        status: "error",
+      });
     }
   };
 
@@ -130,12 +136,6 @@ const AddPokemonPage: FC = () => {
                 <Button my={4} colorScheme="teal" type="submit">
                   Add Pokemon
                 </Button>
-
-                {/* success message */}
-                {deleteSuccess && <Text>Pokemon added!</Text>}
-
-                {/* error message */}
-                {error && <Text>{error}</Text>}
               </Stack>
             </FormControl>
           </form>
